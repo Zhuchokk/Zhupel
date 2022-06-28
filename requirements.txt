@@ -3,7 +3,6 @@ altgraph==0.17
 asgiref==3.4.1
 async-timeout==3.0.1
 attrs==21.2.0
-backports.zoneinfo==0.2.1
 beautifulsoup4==4.9.3
 blurhash==1.1.4
 boost==0.1
