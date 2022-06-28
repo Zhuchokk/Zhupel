@@ -3,7 +3,6 @@ altgraph==0.17
 asgiref==3.4.1
 async-timeout==3.0.1
 attrs==21.2.0
-b0mb3r==0.1.0
 backports.zoneinfo==0.2.1
 beautifulsoup4==4.9.3
 blurhash==1.1.4
@@ -93,7 +92,6 @@ PyYAML==5.4.1
 ratelim==0.1.6
 requests==2.25.1
 rfc3986==1.5.0
-scipy==1.4.1
 six==1.15.0
 sniffio==1.2.0
 soupsieve==2.2.1
