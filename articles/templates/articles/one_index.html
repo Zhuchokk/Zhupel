@@ -1,0 +1,156 @@
+{% extends 'articles/base.html' %}
+{% load liked %}
+{% block title %}ЖупелЪ{% endblock %}
+
+{% block links%}
+<link rel="stylesheet" href="/static/articles/one_index_Style.css">
+{% endblock %}
+
+{% block content %}
+<script
+  type="text/javascript"
+  src="https://vk.com/js/api/openapi.js?168"
+  charset="windows-1251"
+></script>
+<script type="text/javascript">
+  VK.init({ apiId: 8192046, onlyWidgets: true });
+</script>
+
+<main>
+    <div class="container">
+        {% for theme in article.get_themes %}
+            <a class="theme" href="{% url 'articles:theme_articles' theme %}">{{ theme }}</a>
+        {% endfor %}
+        <p class="date">{{ article.pub_date }}</p>
+        <h1>{{ article.header }}</h1>
+        {% for i in tags %}
+            {% if i.type == 'p'%}
+                <p>{{ i.text }}</p>
+            {% elif i.type == 'h2'%}
+                <h2>{{ i.text }}</h2>
+            {% elif i.type == 'img'%}
+                <div class="image">
+                    <img src={{ i.src }} alt={{ i.alt }}>
+                </div>
+
+            {% elif i.type == 'q'%}
+                <q>{{ i.text }}</q>
+            {% endif %}
+        {% endfor %}
+        
+        <div class="vk_like" id="vk_like"></div>
+        <div id="vk_comments"></div>
+    </div>
+</main>
+{% endblock %}
+
+{% block script %}
+<script src="/static/js/jquery.js"></script>
+<script type="text/javascript">
+  function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+  VK.Widgets.Like("vk_like", {type: "button", height: 22, page_id: {{ article.id }}});
+  VK.Widgets.Comments("vk_comments", {limit: 10, attach: "*", page_id: {{ article.id }}});
+  VK.Observer.subscribe("widgets.like.liked", function liked(){
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        data: {'secret_key': "{{ article.secret_key }}", 'value': 1, 'type': 'like'},
+        url: "{% url 'articles:one_article' article.id %}",
+        headers: {
+        "X-CSRFToken": getCookie("csrftoken"),
+        },
+        success: function(response){
+            console.log("success");
+        },
+
+        error: function(response){
+            console.log(response.error)
+        }
+
+    }
+    );
+  });
+  VK.Observer.subscribe("widgets.like.unliked", function unliked(){
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        data: {'secret_key': "{{ article.secret_key }}", 'value': 0, 'type': 'like'},
+        url: "{% url 'articles:one_article' article.id %}",
+        headers: {
+        "X-CSRFToken": getCookie("csrftoken"),
+        },
+        success: function(response){
+            console.log("success");
+        },
+
+        error: function(response){
+            console.log(response.error)
+        }
+
+    }
+    );
+  });
+  VK.Observer.subscribe("widgets.comments.new_comment", function comment(){
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        data: {'secret_key': "{{ article.secret_key }}", 'value': 1, 'type': 'comment'},
+        url: "{% url 'articles:one_article' article.id %}",
+        headers: {
+        "X-CSRFToken": getCookie("csrftoken"),  // don't forget to include the 'getCookie' function
+        },
+        success: function(response){
+            console.log("success");
+        },
+
+        error: function(response){
+            console.log(response.error)
+        }
+
+    }
+    );
+  });
+  VK.Observer.subscribe("widgets.comments.delete_comment", function uncomment(){
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        data: {'secret_key': "{{ article.secret_key }}", 'value': 0, 'type': 'comment'},
+        url: "{% url 'articles:one_article' article.id %}",
+        headers: {
+        "X-CSRFToken": getCookie("csrftoken"),  // don't forget to include the 'getCookie' function
+        },
+        success: function(response){
+            console.log("success");
+        },
+
+        error: function(response){
+            console.log(response.error)
+        }
+
+    }
+    );
+  });
+</script>
+
+
+<!--<script type="text/javascript">-->
+<!--  VK.Widgets.Like("vk_like", {type: "button", height: 22, page_id: {{ article.id }}});-->
+<!--  VK.Widgets.Comments("vk_comments", {limit: 10, attach: "*", page_id: {{ article.id }}});-->
+<!--  VK.Observer.subscribe("widgets.like.liked", function liked(){-->
+<!--    window.location.href = "/article/like/{{ article.id }}&{{ article.secret_key }}&1";-->
+<!--  });-->
+<!--  VK.Observer.subscribe("widgets.like.unliked", function unliked(){-->
+<!--    window.location.href = "/article/like/{{ article.id }}&{{ article.secret_key }}&0";-->
+<!--  });-->
+<!--  VK.Observer.subscribe("widgets.comments.new_comment", function comment(){-->
+<!--    window.location.href = "/article/comment/{{ article.id }}&{{ article.secret_key }}&1";-->
+<!--  });-->
+<!--  VK.Observer.subscribe("widgets.comments.delete_comment", function uncomment(){-->
+<!--    window.location.href = "/article/comment/{{ article.id }}&{{ article.secret_key }}&0";-->
+<!--  });-->
+<!--</script>-->
+{% endblock %}

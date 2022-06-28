@@ -1,0 +1,21 @@
+{% extends 'articles/base.html' %}
+
+{% block title %}ЖупелЪ{% endblock %}
+
+{% block links%}
+<link rel="stylesheet" href="/static/articles/themes_Style.css">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container">
+        <h2>Выберите тему:</h2>
+        <div class="buttons">
+            {% for theme in themes %}
+                <button><a href="{% url 'articles:theme_articles' theme %}">{{ theme }}</a></button>
+            {% endfor %}
+        </div>
+    </div>
+
+</main>
+{% endblock %}

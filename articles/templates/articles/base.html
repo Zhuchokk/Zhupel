@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'articles/style.css' %}">
+    {% block links %}{%endblock%}
+</head>
+<body>
+    {% block header%}
+    <header>
+        <div class="container">
+            <nav>
+                <a href="{% url 'articles:index' %}"><b>ЖупелЪ</b></a>
+                <ul>
+
+                    <li><a href="{% url 'articles:theme_view' %}">Темы</a></li>
+                    <li><a href="{% url 'articles:one_article' 4 %}">О блоге</a></li>
+                    <li><a href="{% url 'articles:one_article' 9 %}">Помощь</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    {% endblock%}
+    {% block content %}
+    {% endblock %}
+    {% block footer %}
+    <footer>
+        <p>2022 Блог "Жупел"</p>
+        <p>© Все права защищены</p>
+    </footer>
+
+    {% endblock %}
+
+
+
+    {% block script %}
+    {% endblock %}
+
+</body>
+</html>

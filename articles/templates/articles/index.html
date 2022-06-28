@@ -1,0 +1,97 @@
+{% extends "articles/base.html" %}
+{% load index %}
+{% block title %}ЖупелЪ{% endblock %}
+
+{% block links%}
+<link rel="stylesheet" href="/static/articles/index_style.css">
+{%endblock%}
+
+{% block content %}
+<main>
+    <div class="container">
+        {%for article in articles%}
+        <div class="item">
+            <p class="date">{{ article.pub_date }}</p>
+            <h2><a href="{% url 'articles:one_article' article.id %}">{{ article.header }}</a> </h2>
+            <div class="statistics">
+                <img src="/static/articles/images/view.png" alt="views" class="eye">
+                <p>{{ article.views }}</p>
+                <img src="/static/articles/images/like.png" alt="like">
+                <p>{{ article.like_count }}</p>
+                <img src="/static/articles/images/comment.png" alt="comment">
+                <p>{{ article.comment_count }}</p>
+            </div>
+            {% for theme in article.get_themes %}
+                <a class="theme" href="{% url 'articles:theme_articles' theme %}">{{ theme }}</a>
+            {% endfor %}
+        </div>
+
+
+        {% endfor %}
+    </div>
+
+</main>
+
+{% endblock %}
+
+{% block script %}
+
+<script src="/static/js/jquery.js"></script>
+<script>
+        if (!(document.body.offsetHeight > window.innerHeight)) {
+            footer =  document.getElementsByTagName('footer')[0];
+            footer.style.position = 'absolute';
+            footer.style.bottom = 0;
+            footer.style.display = 'block';
+            footer.style.width =String( $('html').width() - 40) + "px";
+             console.log(innerWidth);
+        }
+    </script>
+<script>
+    String.prototype.format = String.prototype.f = function(){
+	var args = arguments;
+	return this.replace(/\{(\d+)\}/g, function(m,n){
+		return args[n] ? args[n] : m;
+	});
+    };
+   $(window).scroll(function() {
+   if($(window).scrollTop() + $(window).height() > $(document).height() - 5) {
+       $.ajax({
+            type: 'GET',
+            url: '{% url 'articles:index' %}',
+            dataType: "json",
+            data: {'count': document.getElementsByClassName("item").length},
+            success: function(data) {
+                let str = `<div class="item">
+            <p class="date">{0}</p>
+            <h2><a href="{1}">{2}</a></h2>
+            <div class="statistics">
+                <img src="/static/articles/images/view.png" alt="views" class="eye">
+                <p>{3}</p>
+                <img src="/static/articles/images/like.png" alt="like">
+                <p>{4}</p>
+                <img src="/static/articles/images/comment.png" alt="comment">
+                <p>{5}</p>
+            </div>
+            </div>`
+                for(let i=0; i < data.length; i++){
+                    $("main").append(str.f(String(data[i]['fields']['pub_date']), "/article/" + data[i]['pk'], data[i]['fields']['header'], String(data[i]['fields']['views']), String(data[i]['fields']['like_count']), String(data[i]['fields']['comment_count'])));
+                    let themes = JSON.parse(data[i]['fields']['themes']);
+                    let el = document.getElementsByClassName("item");
+                    for (let j=0; j< themes.length; j++){
+
+                        $(el[el.length - 1]).append('<a class="theme" href="article/{0}">{0}</a>'.f(themes[j]))
+                    }
+
+                }
+
+            },
+            error: function(){
+                console.log("error");
+            }
+
+        });
+  }
+});
+</script>
+{% endblock %}
