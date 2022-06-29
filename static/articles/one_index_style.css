@@ -1,0 +1,116 @@
+.theme{
+	font-size: 13px;
+	display: inline-block;
+	margin-right: 7px;	
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border: 1px solid black;
+	padding: 1px;
+	transition: all 0.3s;
+	text-decoration: none;
+	color: black;
+}
+
+main .container{
+	margin-left: 10%;
+	padding-top: 20px;
+	width:  55%;
+}
+
+main h1{
+	font-size: 37px;
+	padding-bottom: 20px;
+}
+main h2{
+	font-size: 27px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+main img{
+	max-height: 10%;
+	max-width: 30%;
+	
+	margin-left: auto;
+    margin-right: auto;
+    display: block;
+    
+}
+main .image{
+	margin-top: 10px;
+    margin-bottom: 10px;
+	object-fit: contain;
+	background-color: rgb(238, 238, 238);
+}
+
+main q{
+	display: block;
+	padding-top: 7px;
+	padding-bottom: 7px;
+	padding-left: 13px;
+	border-left: 3px solid black;
+}
+
+.theme:hover{
+	border: 1px solid transparent;
+}
+.date{
+	font-size: 15px;
+	color: rgb(100, 100, 100);
+}
+h5{
+	font-size: 20px;
+	border-top: 1px solid rgb(100, 100, 100);
+	padding-top: 10px;
+	margin-top: 15px;
+}
+h6{
+	font-size: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.comment{
+	display: block;
+	padding-bottom: 10px;
+
+}
+.comment .body{
+	padding-left: 5px;
+	font-size: 16px;
+}
+.comment .name{
+	font-weight: bold;
+	font-size: 15px;
+	display: inline-block;
+}
+.comment .info{
+	display: inline-block;
+	font-size: 12px;
+}
+label{
+	padding-right: 3px;
+	font-size: 16px;
+	justify-content: center;
+}
+.button{
+	font-size: 14px;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	background-color: transparent;
+	padding: 2px;
+	border: 2px solid rgb(100, 100, 100);
+}
+.button:hover{
+	background-color: rgb(170, 170, 170);
+}
+main .vk_like{
+	padding-top: 15px;
+	margin-top: 15px;
+	border-top: 1px solid black;
+	display: block;
+	width: auto !important;
+	padding-bottom: 15px;
+}
+footer{
+display: none !important;
+}
