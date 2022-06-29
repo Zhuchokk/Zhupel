@@ -8,5 +8,5 @@ urlpatterns = [
     path('article/<int:id>/', views.one_article, name="one_article"),
     path('article/<str:theme>/', views.theme_articles, name="theme_articles"),
     path('themes', views.theme_view, name="theme_view"),
-    path(r'^favicon\.ico$', RedirectView.as_view(url='/static//images/favicon.ico'), name='favicon'),
+    path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico'), name='favicon'),
 ]
