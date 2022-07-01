@@ -1,2 +1,2 @@
+release: python manage.py migrate
 web: gunicorn political_blog.wsgi
-heroku ps:scale web=1
