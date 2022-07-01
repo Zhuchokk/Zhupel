@@ -1,2 +1,2 @@
-web: gunicorn .wsgi --log-file -
-$ heroku ps:scale web=1
+web: gunicorn political_blog.wsgi
+heroku ps:scale web=1
