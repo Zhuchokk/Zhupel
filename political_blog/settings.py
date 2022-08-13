@@ -9,16 +9,17 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 import dj_database_url
+import keys # my backup passwords
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# login: admin password: c0mrade099!
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-d37@emzo4*5hibtmz_sm&=#(cu--^u=ld)i)z7x+rh*lzdut1i'
+# SECRET_KEY = keys.SECRET_KEY #for local start
+SECRET_KEY = os.getenv('SECRET_KEY', 'None')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -82,7 +83,8 @@ WSGI_APPLICATION = 'political_blog.wsgi.application'
 #         'PORT': '',
 #     }
 # }
-DATABASES = {'default': dj_database_url.parse('postgres://jsytupadivohta:8440722204bb8b09a12e40bfe0ed512c35a4d767784532dee375cfc1b5c5dcef@ec2-176-34-215-248.eu-west-1.compute.amazonaws.com:5432/dbaa8f6ig11vtu')}
+# DATABASES = {'default': dj_database_url.parse(keys.HEROKU_URL)} # for local start
+DATABASES = {'default': dj_database_url.parse(os.getenv('DATABASE_URL', 'None'))}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
