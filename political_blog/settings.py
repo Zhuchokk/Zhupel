@@ -8,7 +8,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
-# import dj_database_url
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +23,7 @@ SECRET_KEY = 'django-insecure-d37@emzo4*5hibtmz_sm&=#(cu--^u=ld)i)z7x+rh*lzdut1i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'zhupel.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'zhupel.herokuapp.com', 'localhost']
 
 
 # Application definition
@@ -72,13 +72,17 @@ WSGI_APPLICATION = 'political_blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'political_blog',
+#         'USER': 'postgres',
+#         'PASSWORD': '12345',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
+DATABASES = {'default': dj_database_url.parse('postgres://jsytupadivohta:8440722204bb8b09a12e40bfe0ed512c35a4d767784532dee375cfc1b5c5dcef@ec2-176-34-215-248.eu-west-1.compute.amazonaws.com:5432/dbaa8f6ig11vtu')}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -122,5 +126,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# prod_db = dj_database_url.config(conn_max_age=500)
-# DATABASES['default'].update(prod_db)
+prod_db = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(prod_db)
